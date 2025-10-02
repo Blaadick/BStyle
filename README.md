@@ -16,11 +16,13 @@ If your QML application can use QtQuickControl2 styles, it will use it.
 yay -S bstyle-qml-theme
 ```
 
-### Windows
-[ShortAudioAnswer.webm](https://github.com/user-attachments/assets/299c7c4a-3aa2-44c3-af96-74cd9bda0196)
-
 ### Manual
-Later
+```bash
+git clone https://github.com/Blaadick/BStyle.git
+cd BStyle
+cmake -B cmake-build-release -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build cmake-build-release --parallel
+```
 
 ## License
 Code is licensed under GPL-3.0-only
