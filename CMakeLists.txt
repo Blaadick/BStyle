@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.1)
 
 project(BStyle
-    VERSION 0.0.1
+    VERSION 0.0.2
     DESCRIPTION "Style for QML applications"
     LANGUAGES CXX
 )
@@ -23,4 +23,5 @@ qt_add_qml_module(bstyle
     QML_FILES ${QMLS}
 )
 
+install(FILES ${CMAKE_BINARY_DIR}/libbstyle.so DESTINATION /usr/lib)
 install(DIRECTORY ${QT_QML_OUTPUT_DIRECTORY} DESTINATION /usr/lib/qt6)
