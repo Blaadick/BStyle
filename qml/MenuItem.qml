@@ -19,14 +19,13 @@ T.MenuItem {
     padding: 5
     spacing: 5
 
-    icon.color: "#ffffff"
-    icon.width: 20
-    icon.height: 20
+    icon.width: 16
+    icon.height: 16
 
     contentItem: IconLabel {
         readonly property real arrowPadding: control.subMenu ? control.arrow.width + control.spacing : 0
         readonly property real indicatorPadding: control.checkable ? control.indicator.width + control.spacing : 0
-        leftPadding: control.icon.name ? 0 : 20 + control.spacing
+        leftPadding: control.icon.name.length > 0 || control.icon.source.toString().length > 0 ? 0 : 16 + control.spacing
         rightPadding: control.mirrored ? indicatorPadding : arrowPadding
         spacing: control.spacing
 
@@ -35,6 +34,7 @@ T.MenuItem {
         alignment: Qt.AlignLeft
 
         icon: control.icon
+        defaultIconColor: "#ffffff"
         text: control.text
         font: control.font
         color: "#ffffff"
@@ -43,10 +43,12 @@ T.MenuItem {
     indicator: CheckIndicator {
         x: control.mirrored ? control.width - width - control.rightPadding : control.leftPadding
         y: control.topPadding + (control.availableHeight - height) / 2
-        width: 20
-        height: 20
+
+        width: control.icon.width
+        height: control.icon.height
         radius: 5
-        color: "#202020"
+        color: "#191a1c"
+
         isChecked: control.checked
         visible: control.checkable
     }
@@ -55,16 +57,19 @@ T.MenuItem {
         x: control.mirrored ? control.leftPadding : control.width - width - control.rightPadding
         y: control.topPadding + (control.availableHeight - height) / 2
 
-        visible: control.subMenu
+        width: control.icon.width
+        height: control.icon.height
+        name: "arrow-right"
+        color: control.icon.color
+
         mirror: control.mirrored
-        name: "draw-arrow-forward"
-        color: "#ffffff"
+        visible: control.subMenu
     }
 
     background: Rectangle {
         implicitWidth: 200
-        implicitHeight: 10
-        color: control.highlighted ? "#3a3a3a" : "#2d2d2d"
+        implicitHeight: control.icon.height
         radius: 10
+        color: control.highlighted ? "#393b40" : "#26282b"
     }
 }

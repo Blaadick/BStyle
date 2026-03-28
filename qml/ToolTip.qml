@@ -17,7 +17,7 @@ T.ToolTip {
         implicitBackgroundHeight + topPadding + bottomPadding,
         implicitContentHeight + topPadding + bottomPadding
     )
-    padding: 10
+    padding: 5
 
     contentItem: Text {
         text: control.text
@@ -27,7 +27,7 @@ T.ToolTip {
     }
 
     background: Rectangle {
-        color: "#2d2d2d"
+        color: "#26282b"
         radius: 10
     }
 }

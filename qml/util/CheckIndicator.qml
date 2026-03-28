@@ -9,7 +9,7 @@ Rectangle {
 
     implicitWidth: 40
     implicitHeight: 40
-    color: "#2d2d2d"
+    color: "#26282b"
     radius: 10
 
     property bool isChecked
@@ -17,7 +17,7 @@ Rectangle {
     IconImage {
         anchors.fill: parent
         visible: control.isChecked
-        name: "ok"
+        name: "gtk-ok"
         color: "#ffffff"
     }
 }
