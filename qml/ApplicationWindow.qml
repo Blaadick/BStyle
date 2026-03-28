@@ -5,5 +5,5 @@ import QtQuick
 import QtQuick.Templates as T
 
 T.ApplicationWindow {
-    color: "#202020"
+    color: "#191a1c"
 }

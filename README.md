@@ -22,7 +22,6 @@ git clone https://github.com/Blaadick/BStyle.git
 cd BStyle
 cmake -B cmake-build-release -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build cmake-build-release --parallel
-cmake --install cmake-build-release
 ```
 
 ## License

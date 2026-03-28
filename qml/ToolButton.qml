@@ -2,19 +2,35 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 
-ToolButton {
+T.ToolButton {
     id: control
 
-    scale: pressed ? 0.97 : (hovered ? 1.03 : 1)
+    implicitWidth: Math.max(
+        implicitBackgroundWidth + leftPadding + rightPadding,
+        implicitContentWidth + leftPadding + rightPadding
+    )
+    implicitHeight: Math.max(
+        implicitBackgroundHeight + topPadding + bottomPadding,
+        implicitContentHeight + topPadding + bottomPadding
+    )
 
-    background: Rectangle {
-        implicitWidth: 40
-        implicitHeight: 40
-        color: "#2d2d2d"
-        radius: 10
+    icon.width: 24
+    icon.height: 24
+    icon.color: "#ffffff"
+
+    contentItem: IconLabel {
+        icon: control.icon
+        text: control.text
+        color: "#ffffff"
     }
 
-    Behavior on scale { ScaleAnim {} }
+    background: Rectangle {
+        implicitWidth: 44
+        implicitHeight: 44
+        color: control.down ? "#393b40" : "#26282b"
+        radius: 10
+    }
 }

@@ -37,7 +37,7 @@ T.Menu {
     background: Rectangle {
         implicitWidth: 200
         implicitHeight: 20
-        color: "#202020"
+        color: "#191a1c"
         radius: 10
     }
 }
