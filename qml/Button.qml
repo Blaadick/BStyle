@@ -1,36 +1,59 @@
-// Copyright (C) 2025 Blaadick
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright (C) 2026 Blaadick
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 import QtQuick
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
+import QtQuick.Controls.impl
 
 T.Button {
     id: control
 
     implicitWidth: Math.max(
-        implicitBackgroundWidth + leftPadding + rightPadding,
-        implicitContentWidth + leftPadding + rightPadding
+        implicitBackgroundWidth + leftInset + rightInset,
+        implicitContentWidth + 2 * inset
     )
     implicitHeight: Math.max(
-        implicitBackgroundHeight + topPadding + bottomPadding,
+        implicitBackgroundHeight + topInset + bottomInset,
         implicitContentHeight + topPadding + bottomPadding
     )
 
-    icon.width: 24
-    icon.height: 24
-    icon.color: "#ffffff"
+    readonly property bool squeezed: width > 0 && width < implicitWidth
+    readonly property real inset: Theme.inset(implicitBackgroundHeight, implicitContentHeight)
+
+    leftPadding: squeezed ? Math.max(4, (width - implicitContentWidth) / 2) : inset
+    rightPadding: squeezed ? leftPadding : inset
+    topPadding: inset
+    bottomPadding: inset
+    spacing: 8
+    hoverEnabled: Application.styleHints.useHoverEffects
+    font.weight: Font.Medium
+
+    readonly property bool emphasized: checked || highlighted
+    readonly property color contentColor: !enabled ? Theme.textDisabled
+        : emphasized ? Theme.textOnPrimary
+            : Theme.text
+
+    icon.width: 18
+    icon.height: 18
+    icon.color: contentColor
 
     contentItem: IconLabel {
+        spacing: control.spacing
+        mirrored: control.mirrored
+        display: control.display
         icon: control.icon
         text: control.text
-        color: "#ffffff"
+        font: control.font
+        color: control.contentColor
     }
 
-    background: Rectangle {
-        implicitWidth: 44
-        implicitHeight: 44
-        color: control.down ? "#393b40" : "#26282b"
-        radius: 10
+    background: ButtonBackground {
+        target: control
+        emphasized: control.emphasized
+        flat: control.flat
+    }
+
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
     }
 }

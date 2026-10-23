@@ -1,36 +1,36 @@
-// Copyright (C) 2025 Blaadick
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright (C) 2026 Blaadick
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 import QtQuick
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
+import QtQuick.Controls.impl
 
 T.TextField {
     id: control
 
-    implicitWidth: Math.max(
-        implicitBackgroundWidth + leftPadding + rightPadding,
-        placeholder.implicitWidth + leftPadding + rightPadding
-    )
+    implicitWidth: implicitBackgroundWidth + leftInset + rightInset
+        || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
     implicitHeight: Math.max(
-        implicitBackgroundHeight + topPadding + bottomPadding,
+        implicitBackgroundHeight + topInset + bottomInset,
+        contentHeight + topPadding + bottomPadding,
         placeholder.implicitHeight + topPadding + bottomPadding
     )
 
-    leftPadding: 10
+    padding: Theme.inset(implicitBackgroundHeight, contentHeight)
+    hoverEnabled: Application.styleHints.useHoverEffects
 
-    color: "#ffffff"
-    selectionColor: "#393b40"
-    selectedTextColor: "#ffffff"
-    placeholderTextColor: control.palette.placeholderText
+    color: enabled ? Theme.text : Theme.textDisabled
+    selectionColor: Theme.primarySubtle
+    selectedTextColor: Theme.text
+    placeholderTextColor: Theme.textTertiary
     verticalAlignment: TextInput.AlignVCenter
 
     PlaceholderText {
         id: placeholder
         x: control.leftPadding
         y: control.topPadding
-        width: control.width - (control.padding)
-        height: control.height - (control.padding)
+        width: control.width - (control.leftPadding + control.rightPadding)
+        height: control.height - (control.topPadding + control.bottomPadding)
 
         text: control.placeholderText
         font: control.font
@@ -41,10 +41,11 @@ T.TextField {
         renderType: control.renderType
     }
 
-    background: Rectangle {
-        implicitWidth: 200
-        implicitHeight: 44
-        color: "#26282b"
-        radius: 10
+    T.ContextMenu.menu: TextEditingContextMenu {
+        editor: control
+    }
+
+    background: FieldBackground {
+        target: control
     }
 }

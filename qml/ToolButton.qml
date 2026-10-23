@@ -1,36 +1,55 @@
-// Copyright (C) 2025 Blaadick
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright (C) 2026 Blaadick
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 import QtQuick
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
+import QtQuick.Controls.impl
 
 T.ToolButton {
     id: control
 
     implicitWidth: Math.max(
-        implicitBackgroundWidth + leftPadding + rightPadding,
-        implicitContentWidth + leftPadding + rightPadding
+        implicitBackgroundWidth + leftInset + rightInset,
+        implicitContentWidth + 2 * inset
     )
     implicitHeight: Math.max(
-        implicitBackgroundHeight + topPadding + bottomPadding,
+        implicitBackgroundHeight + topInset + bottomInset,
         implicitContentHeight + topPadding + bottomPadding
     )
 
-    icon.width: 24
-    icon.height: 24
-    icon.color: "#ffffff"
+    leftPadding: squeezed ? Math.max(4, (width - implicitContentWidth) / 2) : inset
+    rightPadding: squeezed ? leftPadding : inset
+    topPadding: inset
+    bottomPadding: inset
+    spacing: 6
+    hoverEnabled: Application.styleHints.useHoverEffects
+
+    readonly property bool squeezed: width > 0 && width < implicitWidth
+    readonly property real inset: Theme.inset(implicitBackgroundHeight, implicitContentHeight)
+    readonly property color contentColor: !enabled ? Theme.textDisabled
+        : checked || highlighted ? Theme.textOnPrimary : Theme.text
+
+    icon.width: 20
+    icon.height: 20
+    icon.color: contentColor
 
     contentItem: IconLabel {
+        spacing: control.spacing
+        mirrored: control.mirrored
+        display: control.display
         icon: control.icon
         text: control.text
-        color: "#ffffff"
+        font: control.font
+        color: control.contentColor
     }
 
-    background: Rectangle {
-        implicitWidth: 44
-        implicitHeight: 44
-        color: control.down ? "#393b40" : "#26282b"
-        radius: 10
+    background: StateBackground {
+        target: control
+        emphasized: control.checked || control.highlighted
+        implicitWidth: Theme.controlHeight
+    }
+
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
     }
 }

@@ -6,23 +6,21 @@
 Custom style for QML applications.
 
 ## Usage
-Use env `QT_QUICK_CONTROLS_STYLE=BStyle`. Set it global, or launch application with it.
-
-If your QML application can use QtQuickControl2 styles, it will use it.
+Use env `QT_QUICK_CONTROLS_STYLE=BStyle` or `-style BStyle` argument.
 
 ## Installation
 ### Arch Linux
 ```bash
-yay -S bstyle-qml-theme
+yay -S bstyle
 ```
 
 ### Manual
 ```bash
 git clone https://github.com/Blaadick/BStyle.git
 cd BStyle
-cmake -B cmake-build-release -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B cmake-build-release
 cmake --build cmake-build-release --parallel
 ```
 
 ## License
-Code is licensed under GPL-3.0-only
+Code is licensed under GPL-3.0-or-later

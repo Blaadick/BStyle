@@ -1,0 +1,45 @@
+name: Build
+
+on:
+    push:
+        branches: ['**']
+    pull_request:
+    workflow_call:
+
+jobs:
+    linux-x86_64:
+        name: linux-x86_64
+        runs-on: ubuntu-latest
+        container: archlinux:base-devel
+        steps:
+        -   name: Install dependencies
+            run: pacman -Syu --noconfirm --needed git cmake ninja qt6-base qt6-declarative
+
+        -   uses: actions/checkout@v7.0.1
+
+        -   name: Build
+            run: |
+                cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+                cmake --build build --parallel
+
+    windows-x86_64:
+        name: windows-x86_64
+        runs-on: windows-latest
+        defaults:
+            run:
+                shell: msys2 {0}
+        steps:
+        -   uses: msys2/setup-msys2@v2.33.0
+            with:
+                msystem: UCRT64
+                update: true
+                pacboy: >-
+                    toolchain:p cmake:p ninja:p
+                    qt6-base:p qt6-declarative:p
+
+        -   uses: actions/checkout@v7.0.1
+
+        -   name: Build
+            run: |
+                cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+                cmake --build build --parallel

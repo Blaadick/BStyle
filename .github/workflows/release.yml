@@ -1,0 +1,18 @@
+name: Release
+
+on:
+    push:
+        tags: ['v*']
+
+jobs:
+    build:
+        name: Build
+        uses: ./.github/workflows/build.yml
+
+    aur:
+        name: AUR Deploy
+        needs: build
+        uses: ./.github/workflows/aur-deploy.yml
+        with:
+            tag: ${{ github.ref_name }}
+        secrets: inherit
